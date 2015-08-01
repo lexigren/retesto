@@ -1,0 +1,239 @@
+/*вигляд елементів сторінки деталей товару  */
+
+/*вигляд тегів*/
+.tagDiv
+  border-radius 3px
+  background-color #add8e6
+  opacity 0.5
+  margin-top 5px
+  margin-left 5px
+  display inline-block
+  padding 2px
+  min-width 10px
+
+/*заголовки*/
+.descriptionText,.itemTitleText
+  margin-top 0px
+
+/*додавання градієнтного підкреслення під заголовки*/
+.descriptionText::after,.itemTitleText::after
+  content: "";
+  background-image: linear-gradient(to right, rgba(0,0,0,0.3),rgba(0,0,0,0));
+  height: 1px;
+  display: block;
+
+/*блок опису товарів*/
+.descriptionBlock
+  background linear-gradient(#ffffff, #e5ecf1)
+  border-radius 3px
+
+.textBlock
+  background linear-gradient(#e5ecf1,#ffffff)
+  padding 5px
+
+.priceText
+  font-weight bold
+
+/*вигляд вкладок на сторінці опису товару*/
+.detailsTabs li.active a, .detailsTabs li.active a:hover
+  background-color #8DCE14
+
+/*вигляд форми написання коментаря  */
+.reviewComposer
+  input
+    margin-top 5px
+  textarea
+    resize none
+
+/*вигляд коментаря*/
+.singleComment
+  background  linear-gradient(to bottom, #d2ed9c 0%,rgba(125,185,232,0) 100%)
+  .close
+    color #ff4500
+  .authorName, .itemRate
+    font-weight bold
+  .commentDate
+    color darkgrey
+  .administrative
+    background  linear-gradient(to bottom, #ed960d 0%,rgba(125,185,232,0) 100%)
+
+/*jade автоматично додає новий рядок після кожного тегу, для запобігання цьому, застосуємо наступний стиль */
+.oneLine
+  margin-right 5px
+  display inline-block
+
+/*вигляд блоку ілюстрації товару  */
+.imageBlock
+  padding 10px
+  position relative
+
+.imageBlock::after
+  content ' '
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  background linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.3) 100%)
+
+
+/*вигляд кнопки відкриття слайдеру зображень*/
+.expandButton
+  color #ffffff
+  right 5%
+  z-index 1
+  font-size 20px
+
+.expandButton:hover
+  font-size 30px
+
+/*налаштування вигляду слайдеру зображень  */
+
+.imageSlider
+  position fixed
+  top 0
+  left 0
+  width 100%
+  height 100%
+  background rgba(0,0,0,0.7)
+  z-index 2
+
+
+/*вигляд кнопки закриття слайдеру  */
+.closeButton
+  color #ffffff
+  position absolute
+  top 10%
+  right 2%
+  font-size 20px
+  padding 5px
+  border-radius 50%
+  text-align center
+
+.closeButton:hover
+  font-size 25px
+  background-color #DF513B
+
+/*секції слайдеру  */
+.sliderSection
+  position absolute
+  top 0
+  height 100%
+
+.imageHolder
+  width 70%
+  left 15%
+  background-color #030303
+
+/*елементи навігації слайдеру  */
+.previousImageButton
+  width 15%
+  height 100%
+  left 0
+
+.nextImageButton
+  width 15%
+  height 100%
+  left 85%
+
+
+.noImage, .slideButton
+  color #ffffff
+  width 100%
+  text-align center
+  font-size 40px
+
+.slideButton:hover
+  font-size 45px
+
+/*вигляд зображення в слайдері*/
+.activeImage
+  display block
+  max-height 80%
+  top 0
+  bottom 0
+  left 0
+  right 0
+  margin auto
+  position absolute
+
+/*вигляд неактивного елементу навігації  */
+.noNextImage
+  color #a9a9a9
+
+.noNextImage:hover
+  font-size 40px
+
+
+/*налаштування тривалості та прогресування анімації у відповідності до часу*/
+/*cubic-bezier задає прогресування, та приймає другу та третю точки*/
+/*кривої Без’є на проміжку 0.0 - 1.1 яка визначає графік відповідності положення анімованого об’єкту*/
+/*до часу з початку анімації*/
+.animate.ng-enter, .animate.ng-leave
+  transition: 900ms cubic-bezier(.46,.45,.61,-0.65) all;
+
+
+/*анімація руху слайду ліворуч*/
+/*ng-enter задає положення елементу на початку його додавання до сторінки */
+/*ng-enter-active - остаточне положення на сторінці   */
+/*відповідно leave задає вихідне та кінцеве положення елементу в процесі його вилучення зі сторінки*/
+.animateNext.ng-enter
+  left 100%
+.animateNext.ng-enter.ng-enter-active
+  left: 15%
+.animateNext.ng-leave
+  left 15%
+.animateNext.ng-leave-active
+  left -100%
+
+/*праворуч*/
+.animatePrevious.ng-enter
+  left -100%
+.animatePrevious.ng-enter.ng-enter-active
+  left: 15%
+.animatePrevious.ng-leave
+  left 15%
+.animatePrevious.ng-leave-active
+  left 100%
+
+/*вилучення підкреслень з тегів*/
+.tagDiv a
+  text-decoration none
+
+/*вигляд кнопки купівлі товару*/
+.buyButton
+  margin-top 30%
+  background #DF513B
+  color #ffffff
+
+.buyButton:hover
+  background #df6632
+  color #ffffff
+
+
+/*клас для центрування тексту по вертикалі  */
+.centerTextVertically
+  position absolute
+  height 100%
+  display flex
+  justify-content center
+  align-items center
+
+/*центрування зображення  */
+.centerImage
+  margin auto
+
+
+blockquote
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  position relative
+
+
+.glyphicon-share-alt
+  color #a9a9a9
+
+.itemDetails
+  position relative

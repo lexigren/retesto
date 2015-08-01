@@ -1,0 +1,23 @@
+//profile-form.jade
+.jumbotron.PFForm.contentHolder#profileForm
+    h2 User profile
+    form#profileForm(name="profileForm", ng-model="profileForm")
+        .form-group
+            label.control-label(for="email") Email:
+            input.form-control(name="email",type="email", placeholder="Email", ng-model="email")
+        .form-group
+            label.control-label(for="fname") First name:
+            input.form-control(name="fname", type="text", placeholder="First name", ng-model="fname")
+        .form-group
+            label.control-label(for="lname") Last name:
+            input.form-control(name="lname", type="text", placeholder="Last name", ng-model="lname")
+        .form-group
+            label.control-label(for="password") Password:
+            input.form-control(name="password", type="password", placeholder="Old password", ng-model="password", required)
+        .form-group
+            label.control-label(for="password2") New password:
+            input.form-control(name="password2", type="password", placeholder="New password", ng-model="password2")
+        .pull-right
+            button.btn.btn-primary(ng-click="update()") Update
+            | &nbsp
+            a.btn.btn-default(ng-click="cancel()") Cancel

@@ -1,0 +1,24 @@
+//orders-table.jade
+table.table.table-hover.table-striped.table-condensed.table-bordered
+    thead
+        tr.pointer
+            th(ng-click="sortReverse=!sortReverse; sortOrder='date'") Date:
+            th Items:
+            th(ng-click="sortReverse=!sortReverse; sortOrder='shippingAddress'") Address:
+            th(ng-click="sortReverse=!sortReverse; sortOrder='totalPrice'") Cost:
+            th(ng-click="sortReverse=!sortReverse; sortOrder='status'") Status:
+    tbody(delete-evt)
+        tr(complete-evt ng-repeat="order in (orders | filter:searchForm.searchText | ordersFilter:searchForm | orderBy:sortOrder:sortReverse) | pagination: page.current | limitTo: page.size")
+            td
+                a(href="/users/{{order.customer._id}}/orders/{{order._id}}") {{order.date |date}}
+            td
+                div(ng-repeat="item in order.items") {{item.item.name}} x{{item.quantity}}
+            td {{order.shippingAddress}}
+            td {{order.totalPrice |currency}}
+            td(class="{{order.status}}Status") {{order.status}}
+        tr.noHover
+            td(colspan=3) Total:
+            td.h4.priceText {{getAllOrdersPrice() | currency}}
+        tr.noHover
+            td(colspan=6)
+                pagination(ng-model="page" data="{{orders.length}}" itemsPerPage="10")

@@ -1,0 +1,21 @@
+//page404.jade
+
+.container.metalBox.metalBorder
+    //екран
+    .fofHolder.metalBorder
+        //чорна підкладка екрану
+        .TVBack
+        //зображення екрану
+        .TVPicture
+            //тестова сітка
+            img.img-responsive.centerImage(src="/res/img/common/404.gif")
+            //текст
+            .fofMessage
+                .lineOne PLEASE STAND BY
+                .lineTwo PAGE WITH SUCH URL MAY APPEAR LATER
+                .lineThree OR MAY NOT
+         //скло з директивою відслідковування миші, для переміщення положення відблиску
+        .TVScreen(move-glare)
+    //кнопка з директивою увімкнення/вимкнення - зміною анімації екрану
+    button(tv-turn).TVButton.pull-right.metalBorder
+        .glyphicon.glyphicon-off

@@ -1,0 +1,23 @@
+//modal-window.jade
+.modal.fade(role="dialog")
+    .modal-dialog
+        .modal-content
+            //заголовок
+            .modal-header
+                //кнопка закриття діалогу
+                button.close(data-dismiss="modal") &times
+                .modal-title {{title}}
+            //тіло
+            .modal-body
+                //у випадку типу вікна "запит підтвердження" показуємо повідомлення
+                h3.glyphicon.glyphicon-exclamation-sign(ng-if="modalDanger") {{message}}
+                //у випадку типу "запит даних" показуємо список полів редагування
+                form.reviewComposer(ng-if="modalInput")
+                    .form-group(ng-repeat="(name,title) in inputFields")
+                        h5 {{title}}
+                        textarea.form-control(ng-model="input[name]")
+            //нижня частина з кнопками підтвердження/відсилання даних/відміни
+            .modal-footer
+                button.btn.typed-button(ng-if="modalDanger" ng-click="callback()" data-dismiss="modal") {{confirm}}
+                button.btn.typed-button(ng-if="modalInput" ng-click="callback()(input)" data-dismiss="modal") {{confirm}}
+                button.btn.btn-default(data-dismiss="modal") Cancel

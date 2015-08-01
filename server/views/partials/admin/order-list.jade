@@ -1,0 +1,7 @@
+//order-list.jade
+.container.contentHolder.itemsList
+    h1.itemTitleText Orders with {{status}} status
+    .col-md-3.col-xs-3
+        orders-filtration-form.itemSearchRow(adjust-evt)
+    .col-md-9.col-xs-9
+        orders-table

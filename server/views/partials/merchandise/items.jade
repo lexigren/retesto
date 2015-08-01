@@ -1,0 +1,54 @@
+//items.jade
+
+.container.contentHolder.itemsList
+    .itemEditControls
+        a.btn.btn-xs.btn-primary.glyphicon.glyphicon-plus-sign(ng-show="identity.isAuthorized('merchandiser')" href="/create/{{category}}")
+    //назва категорії та кількість елементів, що відповідають умовам фільтрації
+    h2 {{filteredItems.length}} items in category "{{category}}"
+    //контент складається з двох колонок
+    .row
+        //колонка пошуку
+        .col-md-3.col-xs-3
+            //форма фільтрації
+            filtration-form.itemSearchRow(adjust-evt)
+        //колонка зі сторінками, сортуванням та списком товарів
+        .col-md-9.col-xs-9
+            //форма сортування
+            .pull-right
+                form.form-inline
+                    .form-group
+                        select.form-control(ng-model="sortOrder",ng-options="item.value as item.text for item in sortOptions", ng-change="order()")
+            //таблиця зі списком товарів
+            table.table.table-hover.table-striped.table-condensed
+                thead
+                    //заголовки колонок таблиці виконують сортування за вказаним полем.
+                    //повторне натискання встановлює зворотній напрямок сортування
+                    tr.pointer
+                        th
+                        th(ng-click="sortReverse=!sortReverse; sortOrder='name'") name
+                        th desciption
+                        th(ng-click="sortReverse=!sortReverse; sortOrder='produced'") produced
+                        th(ng-click="sortReverse=!sortReverse; sortOrder='received'") received
+                        th(ng-click="sortReverse=!sortReverse; sortOrder='price'") price
+                //тіло таблиці
+                //додається директива delete-evt для відслідковування відфільтровування елементів з таблиці
+                //для відповідного зменшення форми пошуку
+                tbody(delete-evt)
+                    //до кожного рядка таблиці додається директива complete-evt, яка відслідковує відмальовування
+                    //останнього рядка, щоб встановити розмір форми пошуку відповідним фінальному розміру списку товарів
+                    //ітеруються елементи масиву товарів filteredItems, що пройшов фільтрацію і сортування, та був розбитий на сторінки
+                    tr(ng-class="{'danger':!item.available}" complete-evt ng-repeat="item in (filteredItems=(items | filter:searchForm.searchText | price:searchForm.priceFrom:searchForm.priceTo | specifications:searchForm | orderBy:sortOrder:sortReverse)) | pagination: page.current | limitTo: page.size")
+                        td
+                            .imageContainer
+                                //img.img-responsive(ng-src="/res/img/{{item._id}}/0.jpg")
+                                img.img-responsive(rnd-img-src="/res/img/{{item._id}}/0.jpg")
+                        td
+                            a(href="/items/{{item._id}}" ng-class="{'text-danger':!item.available}") {{item.name}}
+                        td {{item.description}}
+                        td {{item.produced | date}}
+                        td {{item.received | date}}
+                        td {{item.price | currency}}
+                    //в останній рядок таблиці вноситься список посилань на сторінки
+                    tr.noHover
+                        td(colspan=6)
+                            pagination(ng-model="page" data="{{filteredItems.length}}" itemsPerPage="3")

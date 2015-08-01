@@ -1,0 +1,51 @@
+//index.jade
+extends ./includes/layout
+block main-content
+    //стандартна bootstrap навігаційна панель, закріплена зверху
+    .navbar.navbar-fixed-top.topPanel
+        .container
+            .navbar-header
+                //бренд магазину
+                a.navbar-brand(href="/")  Retro tech store
+                    h6 New brightfull life for an old gadget
+            //меню зі списком категорій товарів магазину
+            .navbar-collapse.collapse
+                ul.nav.navbar-nav#navigationTabs(ng-controller="tabsCtrl")
+                    li(tab-activator ng-show="!authorize('deliverer')")
+                        a(href="/" ng-show="!authorize('deliverer')") Main
+                    //посилання на перегляд категорії ретро комп’ютерів
+                    li(tab-activator ng-show="!authorize('deliverer')")
+                        a(href="/category/computers") Computers
+                    //категорія, яка міститиме такі товари як телефони або модеми
+                    li(tab-activator ng-show="!authorize('deliverer')")
+                        a(href="/category/connectivity") Connectivity
+                    //радіо та телевізійна апаратура
+                    li(tab-activator ng-show="!authorize('deliverer')")
+                        a(href="/category/broadcast") Broadcast
+                    //візок
+                    li.cartTab(tab-activator ng-if="!cart.isEmpty()")
+                        a.text-warning.glyphicon.glyphicon-shopping-cart(href="/checkout") CART
+                    //нові замовлення
+                    li(tab-activator ng-show="authorize('deliverer')")
+                        a(href="/orders/queuing") Queuing
+                    //замовлення в стадії доставки
+                    li(tab-activator ng-show="authorize('deliverer')")
+                        a(href="/orders/shipping") Shipping
+                    //доставлені замовлення
+                    li(tab-activator ng-show="authorize('deliverer')")
+                        a(href="/orders/delivered") Delivered
+                    //відхилені замовлення
+                    li(tab-activator ng-show="authorize('deliverer')")
+                        a(href="/orders/rejected") Rejected
+                //UI аутентифікації
+                div(ng-include="'/partials/account/navbar-login'")
+    section.content
+        //в div з атрибутом ng-view angular буде завантажувати представлення
+        div(ng-view)
+    //форма реєстрації нового користувача
+    div(ng-include="'/partials/account/signup-form'")
+    //нижня панель
+    .navbar.navbar-fixed-bottom
+        .copyright-info
+            footer.container.text-center
+                p &copy 2015 lexigren@gmail.com

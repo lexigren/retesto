@@ -1,0 +1,23 @@
+//recursive-output.jade
+//ітерація відгуків до товару
+//відповіді адміністратора виділяються кольором серед інших
+blockquote.singleComment(ng-class="{administrative:review.administrative}" ng-repeat="review in data | pagination: page.current | limitTo: page.size")
+    //кнопка видалення коментаря
+    .close.glyphicon.glyphicon-trash(ng-show="identity.isAuthorized('merchandiser')"
+        ng-click="askDeleteConfirmation(review)")
+    .itemTitleText
+        h5.oneLine.authorName {{review.author}}
+        h6.oneLine.commentDate at {{review.date | date:'HH:mm:ss yyyy-MM-dd'}}
+    h6.oneLine(ng-if="review.rate") Rate:
+    h5.oneLine.itemRate {{review.rate}}
+    br
+    h5.oneLine Comment:
+    br
+    h6.oneLine {{review.comment}}
+    br
+    //кнопка відповіді на коментар
+    h5.glyphicon.glyphicon-share-alt.pointer(ng-click="showReplyWindow(review)") Reply
+    //контейнер, в який здійснюватиметься рекурсивний вивід, в разі необхідності -
+    //якщо відгук містить відповіді до себе
+    .childContainer(continue-recursion="review")
+pagination(ng-show="data.length>3 || page.current>=3" ng-model="page" data="{{data.length}}" itemsPerPage="3")

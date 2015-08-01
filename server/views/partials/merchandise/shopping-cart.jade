@@ -1,0 +1,34 @@
+//shopping-cart.jade
+.container.contentHolder
+    h1.itemTitleText Shopping cart:
+    //якщо користувач не зареєстрований - виводимо повідомлення
+    h4.text-danger(ng-if="!identity.currentUser") You must sign in to make a purchase!
+    //таблиця товарів в кошику
+    table.table.table-hover.table-striped.table-condensed.table-bordered
+        tbody
+            tr(ng-repeat="item in getCart() track by $index")
+                td
+                    .imageContainer
+                        img.img-responsive(rnd-img-src="/res/img/{{item._id}}/0.jpg")
+                td
+                    a(href="/items/{{item._id}}") {{item.name}}
+                td {{item.description}}
+                td {{item.produced | date}}
+                td {{item.price | currency}}
+                //кнопка видалення товару
+                td
+                    .btn.btn-xs.btn-danger.glyphicon.glyphicon-remove(ng-click="removeFromCart(item)")
+            tr
+                td(colspan=4) Shipping cost:
+                td {{shippingCost | currency}}
+            //загальна вартість
+            tr.noHover
+                td(colspan=4) Total:
+                td.h4.priceText {{totalInCart() | currency}}
+
+    //адреса доставки
+    h4 Shipping address:
+    input.form-control(ng-model="shippingAddress")
+
+    //кнопка підтвердження
+    .btn.btn-danger.pull-right.confirmPurchaseButton(ng-disabled="!orderFilled()" ng-click="askOrderConfirmation()") Confirm purchase

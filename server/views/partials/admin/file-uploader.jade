@@ -1,0 +1,10 @@
+//file-uploader.jade
+.dropZone
+    .dropText Drop images here...
+    //попередній перегляд вибраних ілюстрацій товарів у вигляді сітки
+    //весь блок є transclude елементом
+    .imgPreviewContainer(grid-repeat="3 img in images" ng-click="removeImg(img)")
+        img.img-responsive(rnd-img-src="{{img.src}}")
+
+h5 ...or select from file system:
+input.form-control.standardUploader(type="file" multiple)

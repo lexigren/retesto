@@ -1,0 +1,43 @@
+//filtration-form.jade
+//заголовок форми пошуку
+.itemSearchHeader
+    h3 Search:
+    //кнопка очищення всієї фільтрації
+    h6.clearCtrl.pointer(ng-click="clearSearch()") Clear all
+//форма пошуку
+.itemSearch
+    form(ng-model="searchForm")
+        //загальний пошук за всіма полями
+        .form-group
+            label.h5.control-label In all fields:
+            input.form-control(size=17 ng-model="searchForm.searchText",placeholder="Filter")
+
+        //пошук за ціною в проміжку від  searchForm.priceFrom до searchForm.priceTo
+        .form-group
+            label.h5.control-label Price:
+            .row
+                .col-md-6
+                    h6 from:
+                    input.form-control(size=7 ,placeholder="Filter", ng-model="searchForm.priceFrom")
+                .col-md-6
+                    h6 to:
+                    input.form-control(size=7 ,placeholder="Filter", ng-model="searchForm.priceTo")
+
+        //комплексний пошук за характеристиками
+        //додається елемент редагування кожної можливої характеристики
+        .form-group(ng-repeat="spec in customSearchParams")
+            label.h5.control-label {{spec.name}}:
+            //якщо характеристика визначається числовим значенням, директива ng-if дозволить відмалювати
+            //два поля вводу для нижньої та верхньої межі
+            .row(ng-if="spec.type=='range'")
+                .col-md-6
+                    h6 from:
+                    input.form-control(size=7 ,placeholder="Filter", ng-model="searchForm[spec.name].from")
+                .col-md-6
+                    h6 to:
+                    input.form-control(size=7 ,placeholder="Filter", ng-model="searchForm[spec.name].to")
+            //якщо характеристика визначається списком, додається випадаючий список
+            select.form-control(ng-if="spec.type=='select'", ng-model="searchForm[spec.name].select")
+                option(value="") any
+                //додаються можливі варіанти значення характеристики
+                option(ng-repeat="(type,num) in spec.values" value="{{type}}") {{type}} (total: {{num}})

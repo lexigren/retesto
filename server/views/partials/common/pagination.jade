@@ -1,0 +1,5 @@
+//pagination.jade
+.pagesContainer
+    ul.pagination
+        li(ng-class="{active: $index==currentPage}" ng-repeat="pageNum in pageList() track by $index" ng-click="setPage($index)")
+            a(href="#") {{$index+1}}

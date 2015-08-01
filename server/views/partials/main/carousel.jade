@@ -1,0 +1,21 @@
+//carousel.jade
+//площина проекції тривимірного зображення
+.threeDimensionalSpace
+    //сегментоаний циліндр
+    .carouselContainer
+        //сегменти, кількістю отриманих останніх товарів
+        .carouselTile.contentHolder(ng-repeat="item in items")
+            //вміст сегменту
+            h3.itemTitleText {{item.name}}
+            .imageBlock.carouselImage
+                img.img-responsive.centerImage(rnd-img-src="/res/img/{{item._id}}/0.jpg")
+            .row.panel.textBlock
+                .col-md-7.col-xs-7.tileDesctiption
+                    h5 {{item.description}}
+                .col-md-4.col-xs-4
+                    h5.oneLine Price:
+                    h5.priceText.oneLine {{item.price | currency}}
+            .buyPodium
+                .actionDesctiption
+                    h5 NEW ACQUISITION!
+                a.h5.btn.carouselButton(href="/items/{{item._id}}") Buy!

@@ -1,0 +1,253 @@
+/*site.styl*/
+html {
+  height: 100%;
+/*зробимо нашому магазину зелений градієнтний фон*/
+}
+body {
+/*додамо відступи головного контенту зверху і знизу, щоб він не перекривався панелями*/
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background: linear-gradient(#90ee90, #fff);
+  background-repeat: no-repeat;
+}
+/*встановимо колір панелей */
+.navbar {
+  background-color: #afff1b;
+  border: 0px;
+}
+/*додамо ефект нависання контенту на верхню панель  */
+.topPanel {
+  box-shadow: inset 0 -5px 20px rgba(0,0,0,0.3);
+}
+/*вигляд нижньої панелі*/
+footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.copyright-info {
+  box-shadow: 0 -15px 20px rgba(0,0,0,0.3);
+}
+/*вигляд активної вкладки*/
+.activeTab {
+  background: #97ef97;
+  box-shadow: 5px -10px 20px rgba(0,0,0,0.3);
+}
+/*лого магазину додамо фонове зображення  */
+.navbar-brand {
+  margin-top: -15px;
+  margin-bottom: -20px;
+  color: #4600e4;
+  width: 250px;
+  background: url("../favicon.ico") no-repeat;
+  background-position: 0px 20px;
+  background-size: 30px 30px;
+  padding-left: 40px;
+}
+.navbar-brand h6 {
+  color: #7581e4;
+}
+/*налаштування посилання на форму реєстрації  */
+.showSUcaption {
+  margin-top: 10px;
+  text-align: right;
+  cursor: pointer;
+}
+.showSUcaption:hover,
+.clearCtrl:hover {
+  color: #f00;
+}
+/*приховування форми реєстрації  */
+.hidden {
+  display: none;
+}
+/*відступи елементів форми аутентифікації*/
+.navbar-form .form-group {
+  margin-top: 10px;
+}
+.navbar-form button {
+  margin-top: 10px;
+}
+/*вигляд блоку з контентом*/
+.contentHolder {
+  box-shadow: 10px 12px 20px rgba(0,0,0,0.3);
+  background: linear-gradient(#fff, #d4eed0);
+  background-repeat: no-repeat;
+}
+/*вигляд форми реєстрації  */
+.SUForm {
+/*знаходиться в фіксованій позіції щодо вікна, а не сторінки*/
+  position: fixed;
+/*займає третину ширини документу */
+  width: 33%;
+/*у вертикалі відступає зверху на 1/5*/
+  top: 20%;
+/*горизонтально посередині*/
+  left: 33%;
+/*відступи контенту від лівої та правої межі форми*/
+  padding-left: 10px;
+  padding-right: 10px;
+/*винесення форми на перший план*/
+  z-index: 3;
+}
+/*виляд форми редагування профілю*/
+.PFForm {
+  position: absolute;
+  width: 50%;
+  left: 25%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+/*заміна курсора редагування на вказівник*/
+.pointer {
+  cursor: pointer;
+}
+/*налаштування форми пошуку */
+.itemSearchRow {
+  position: fixed;
+  top: 130px;
+}
+/*заголовок форми фільтрації  */
+.itemSearchHeader {
+  display: table;
+  width: 100%;
+}
+/*контрольний елемент очищення форми  */
+.clearCtrl {
+  display: table-cell;
+  text-align: right;
+}
+/*контрольні елементи форми  */
+.itemSearch {
+  box-shadow: inset 0px 8px 12px -5px #c4bec4;
+  border-radius: 5px;
+  padding: 5px;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+/*встановлюємо мінімальну висоту для порожнього списку товарів*/
+.itemsList {
+  min-height: 275px;
+  position: relative;
+}
+/*вигляд контейнеру з малюнками*/
+.imageContainer {
+  width: 128px;
+  height: 128px;
+  overflow: hidden;
+}
+/*налаштування вигляду скроллбарів*/
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background-color: grba(0, 0, 0, 0);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0,100,0,0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-button {
+  background-color: grba(0, 0, 0, 0);
+}
+/*центрування списку сторінок  */
+.pagesContainer {
+  width: 100%;
+  text-align: center;
+}
+.pagination {
+  display: inline-block;
+}
+/*відключення підсвічування рядка таблиці зі списком сторінок, при наведенні миші*/
+.table-hover > tbody > tr.noHover:hover {
+  background-color: rgba(0,0,0,0);
+}
+.table-hover > tbody > tr.noHover {
+  background-color: rgba(0,0,0,0);
+}
+/*вигляд кнопки переходу на сторінку  */
+.pagination .active a,
+.pagination .active a:hover,
+.pagination .active a:focus {
+  background-color: #c3dcc2;
+  border: 0px;
+}
+/*стилі домашньої сторінки*/
+/*тривимірний простір */
+.threeDimensionalSpace {
+  margin: auto;
+  position: relative;
+/*показник перспективи активує проекцію третього виміру, та ступінь його візуального ефекту*/
+  perspective: 900px;
+}
+/*цилінр*/
+.carouselContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+/*визначаємо необхідність збереження відносних координат вкладених елементів*/
+  transform-style: preserve-3d;
+/*визначаємо анімаційний вигляд трансформацій з тривалістю в одну секунду*/
+  transition: transform 1s;
+}
+/*вигляд сегменту циліндру*/
+.carouselTile {
+  margin: 0;
+  display: block;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  overflow: hidden;
+}
+.carouselTile .carouselImage {
+  max-height: 60%;
+  overflow: hidden;
+}
+.carouselTile .tileDesctiption {
+  margin-left: 5px;
+}
+.buyPodium {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10%;
+  background: #ff4500;
+}
+.buyPodium .carouselButton {
+  width: 30%;
+  height: 70%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 10px;
+  background: #d9f0d5;
+}
+.buyPodium .actionDesctiption {
+  width: 60%;
+  height: 100%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+/*вигляд вітального повідомлення*/
+.greetSplash {
+  position: absolute;
+  width: 70%;
+  height: 50%;
+  left: 15%;
+  top: 25%;
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(144,238,144,0.7));
+  border-radius: 10px;
+  color: #fff;
+  padding: 10px;
+  transition: opacity 2s ease-in-out;
+}

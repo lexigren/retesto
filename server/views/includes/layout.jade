@@ -1,0 +1,33 @@
+//layout.jade
+doctype html
+html
+    head
+        //додаємо тег для активації html5Mode
+        base(href="/")
+    title Retro tech store
+    //link(href="/favicon.ico", rel="shortcut icon", type="image/x-icon")
+    //окрім того додамо бутсрап для використання деяких його конструкцій
+    link(rel="stylesheet", href="/vendor/bootstrap/dist/css/bootstrap.css")
+    //та тоастр для виринаючих повідомлень
+    link(rel="stylesheet", href="/vendor/toastr/toastr.css")
+    //включаємо css файл, який будет згенеровано stylus
+    link(rel="stylesheet", href="/css/site.css")
+    //стилі сторінки деталей товару
+    link(rel="stylesheet", href="/css/itemdetails.css")
+    //стилі сторінки 404
+    link(rel="stylesheet", href="/css/page404.css")
+    //стилі сторінок адміністрування
+    link(rel="stylesheet", href="/css/adminelements.css")
+
+    //імпортуємо файл з переліком наших скриптів
+    include scripts
+
+    //якщо існує bootstrappedUser, записуємо його в глобальну змінну
+    if !!bootstrappedUser
+        script.
+            window.bootstrappedUserObject=!{JSON.stringify(bootstrappedUser)}
+
+    //додаємо agular
+    body(ng-app="app", scroll-evt)
+        //сюди jade вставлятиме контент індивідуальної сторінки
+        block main-content

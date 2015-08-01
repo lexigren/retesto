@@ -1,0 +1,202 @@
+/*вигляд сторінки 404*/
+
+/*контейнер "екрану"*/
+.fofHolder
+  margin-left  auto
+  margin-right  auto
+  margin-top 5%
+  margin-bottom 5%
+  width 80%
+  height 80%
+  overflow hidden
+  border none
+  border-radius 50% / 10%
+  position relative
+  background #ffffff
+
+  /*під час анімації дочірніх елементів контейнеру, що включає зміну прозорості, або трансляції,*/
+  /*вони виносяться на передній план, закриваючи собою контейнер*/
+  /*для запобігання цьому необхіден наступний код*/
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0)
+
+/*підкладка  */
+.TVBack
+  background #000000
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+
+  /*зображення екрану*/
+.TVPicture
+  -webkit-animation turnOn 4s, flickering 0.15s infinite
+  background #ffffff
+  position relative
+
+/*текстове повідомлення*/
+.fofMessage
+  font-family "Lucida Console", "Monaco", monospace
+  color #000000
+  position absolute
+  width 100%
+  text-align center
+  top 40%
+  font-weight bold
+  letter-spacing: -2px
+  transform:scale(0.7,1);
+  .lineOne
+    font-size 4vw
+  .lineTwo
+    font-size 2vw
+  .lineThree
+    font-size 1.5vw
+
+/*"скло" телевізору*/
+.TVScreen
+  background-image radial-gradient(at 30% 20%, rgba(255,255,255,0.95) 9%,rgba(114,140,107,0.8) 50%,rgba(73,102,68,0.9) 67%,rgba(10,56,31,1) 100%);
+  content ' '
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+
+
+
+/*імітація структури металу*/
+.metalBox {
+  background lightgray
+  background-image: -webkit-repeating-linear-gradient(left, hsla(120,20%,100%,0) 0%, hsla(120,20%,100%,0)   6%, hsla(120,20%,100%, .1) 7.5%),
+  -webkit-repeating-linear-gradient(left, hsla(120,20%,  0%,0) 0%, hsla(120,20%,  0%,0)   4%, hsla(120,20%,  0%,.03) 4.5%),
+  -webkit-repeating-linear-gradient(left, hsla(120,20%,100%,0) 0%, hsla(120,20%,100%,0) 1.2%, hsla(120,20%,100%,.15) 2.2%),
+
+  linear-gradient(180deg, hsl(120,20%,78%)  0%,
+  hsl(120,20%,90%) 47%,
+  hsl(120,20%,78%) 53%,
+  hsl(120,20%,70%)100%)
+
+  background-size 25% 100%
+
+  max-width 80%
+
+
+}
+
+.metalBorder
+  background-color: hsl(0,0%,90%)
+  box-shadow: inset hsla(0,0%,15%,  1) 0  0px 0px 4px,
+    inset hsla(0,0%,15%, .8) 0 -1px 5px 4px,
+    inset hsla(0,0%,0%, .25) 0 -1px 0px 7px,
+    inset hsla(0,0%,100%,.7) 0  2px 1px 7px,
+    hsla(0,0%, 0%,.15) 0 -5px 6px 4px,
+    hsla(0,0%,100%,.5) 0  5px 6px 4px
+
+  transition: color .2s
+
+
+/*анімація мерехтіння */
+@keyframes flickering
+  0%
+    background-color darkolivegreen
+  25%
+    background-color #a9a9a9
+  50%
+    background-color #add8e6
+  100%
+    background-color #ffffff
+
+/*анаміція увімкнення екрану*/
+@keyframes turnOn
+  0%
+    transform:scale(1,0.8) translate3d(0,0,0)
+  3.5%
+    transform:scale(1,0.8) translate3d(0,70%,0)
+  3.6%
+    transform:scale(1,0.8) translate3d(0,-70%,0)
+  9%
+    transform:scale(1.3,0.6) translate3d(0,70%,0)
+  50%
+    transform:scale(1,1) translate3d(0,0,0)
+    -webkit-filter:contrast(0) brightness(0)
+    filter:contrast(0) brightness(0)
+  100%
+    transform:scale(1,1) translate3d(0,0,0)
+
+/*вимкнення*/
+@keyframes turnOff
+  0%
+    transform: scale(1, 1.3)
+    opacity: 1;
+  60%
+    transform: scale(1.3, 0.001)
+  100%
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: scale(0, 0.0001)
+
+
+/*кнопка on/off  */
+.TVButton
+  border none
+
+  font bold 1vw "Lucida Console", "Monaco", monospace
+  text-align center
+  color hsla(0,0%,20%,1)
+  text-shadow hsla(0,0%,40%,.5) 0 -1px 0, hsla(0,0%,100%,.6) 0 2px 1px
+
+  width  4vw
+  height 4vw
+  margin-bottom 3%
+  margin-right 3%
+  margin-top -10%
+  line-height 4vw
+  border-radius 50%
+  position relative
+  background-image -webkit-radial-gradient(  50%   0%,  8% 50%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),
+    -webkit-radial-gradient(  50% 100%, 12% 50%, hsla(0,0%,100%,.6) 0%, hsla(0,0%,100%,0) 100%),
+    -webkit-radial-gradient(   0%  50%, 50%  7%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),
+    -webkit-radial-gradient( 100%  50%, 50%  5%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),
+
+    -webkit-repeating-radial-gradient( 50% 50%, 100% 100%, hsla(0,0%,  0%,0) 0%, hsla(0,0%,  0%,0)   3%, hsla(0,0%,  0%,.1) 3.5%),
+    -webkit-repeating-radial-gradient( 50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0)   6%, hsla(0,0%,100%,.1) 7.5%),
+    -webkit-repeating-radial-gradient( 50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.2) 2.2%),
+
+    -webkit-radial-gradient( 50% 50%, 200% 50%, hsla(0,0%,90%,1) 5%, hsla(0,0%,85%,1) 30%, hsla(0,0%,60%,1) 100%)
+
+
+.TVButton:before, .TVButton:after
+  content ""
+  top 0
+  left 0
+  position absolute
+  width inherit
+  height inherit
+  border-radius inherit
+
+  background-image: -webkit-radial-gradient(  50%   0%, 10% 50%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%),
+    -webkit-radial-gradient(  50% 100%, 10% 50%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%),
+    -webkit-radial-gradient(   0%  50%, 50% 10%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%),
+    -webkit-radial-gradient( 100%  50%, 50% 06%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%)
+
+.TVButton:before
+  transform rotate( 65deg)
+.TVButton:after
+  transform rotate(-65deg)
+
+/*вигляд натиснутої кнопки*/
+.TVButton:active
+  color hsl(10, 100%, 40%)
+  text-shadow hsla(10,100%,20%,.3) 0 -1px 0,
+    hsl(10,100%,85%) 0 2px 1px, hsla(0,100%,80%,1) 0 0 5px,
+    hsla(10,100%,50%,.6) 0 0 20px
+  box-shadow  inset hsla(10,100%,30%,  1) 0  0px 0px 4px,
+    inset hsla(10,100%,15%, .4) 0 -1px 5px 4px,
+    inset hsla(10,100%,20%,.25) 0 -1px 0px 7px,
+    inset hsla(10,100%,100%,.7) 0  2px 1px 7px,
+    hsla(10,100%,75%, .8) 0  0px 3px 2px,
+    hsla(10,50%,40%, .25) 0 -5px 6px 4px,
+    hsla(10,80%,95%,   1) 0  5px 6px 4px;
+

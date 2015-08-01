@@ -1,0 +1,22 @@
+//image-slider.jade
+.imageSlider
+    //кнопка - перейти до попереднього
+    .previousImageButton.sliderSection
+        .slideButton.glyphicon.glyphicon-chevron-left.centerTextVertically(ng-click="previous()" ng-class="{noNextImage:currentImage==0}")
+    //ітерація списку зображеннь
+    //блок з зображенням відображається, якщо його індекс еквівалентний поточному зображенню currentImage
+    //блоку встановлюється загальний клас анімації, який визначає темп її прогресування, та специфічний
+    //специфічний клас анімації встановлюється у відповідності до поточного напрямку гортання
+    .imageHolder.sliderSection.animate(ng-repeat="img in imageList track by $index"
+    ng-if="currentImage==$index"
+    ng-class="{animateNext:moveNext, animatePrevious:!moveNext}")
+        //додавання bootstrap іконки у випадку відсутності зображення
+        .glyphicon.glyphicon-film.noImage.centerTextVertically
+        //для самого зображення вимикається стандартна іконка повідомлення про помилку 404
+        //img.activeImage.img-responsive(ng-src="/res/img/{{item}}/{{$index}}.jpg" onerror='this.style.display = "none"')
+        img.activeImage.img-responsive(rnd-img-src="/res/img/{{item}}/{{$index}}.jpg" onerror='this.style.display = "none"')
+    //перейти до наступного
+    .nextImageButton.sliderSection
+        .slideButton.glyphicon.glyphicon-chevron-right.centerTextVertically(ng-click="next()" ng-class="{noNextImage:currentImage==images-1}")
+    //закрити слайдер
+    .closeButton.glyphicon.glyphicon-remove(ng-click="hide()")

@@ -1,0 +1,36 @@
+//navbar-login.jade
+//розмістимо ui аутентифікації в правому боці верхньої панелі та призначимо контроллер
+.navbar-right(ng-controller="LoginCtrl")
+    //використаємо директиву angular ng-hide яка приховає аутентифікацію у випадку наявності поточного користувача
+    ul.nav.navbar-nav.navbar-right(ng-hide="identity.isAuthenticated()")
+        //додамо випадаюче bootstrap меню з формою аутентифікації
+        li.dropdown
+            a.dropdown.dropdown-toggle(href="",data-toggle="dropdown") Sign In
+                b.caret
+            ul.dropdown-menu.contentHolder
+                form.navbar-form
+                    .form-group
+                        input.form-control(placeholder="Email", ng-model="email")
+                    .form-group
+                        input.form-control(type="password", placeholder="Password", ng-model="password")
+                    button.btn.btn-primary(ng-click="signin(email,password)") Sign In
+                    div.showSUcaption Not yet registered?
+    //випадаючий список з діями, які доступні аутентифікованому користувачу
+    //використовує директиву ng-show, яка відображає список лише за наявності поточного користувача
+    ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
+        li.dropdown
+            a.dropdown.dropdown-toggle(href="",data-toggle="dropdown")
+                |{{identity.currentUser.firstName+" "+identity.currentUser.lastName}}
+                b.caret
+            ul.dropdown-menu
+                //директива ng-hide показує елемент лише у випадку наявності ролі власника у поточного користувача
+                li(ng-show="identity.isAuthorized('owner')")
+                    a(href="/admin/users") User Admin
+                li(ng-show="identity.isAuthorized('user')")
+                    a(href="/users/{{identity.currentUser._id}}/orders") My orders
+                //Посилання на профіль.
+                li
+                    a(href="/profile") Profile
+                //посилання з викликом функції виходу з системи
+                li
+                    a(href="",ng-click="signOut()") Sign Out

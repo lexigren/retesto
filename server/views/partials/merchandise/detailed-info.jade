@@ -1,0 +1,73 @@
+//detailed-info.jade
+section
+    //вкладки опису, характеристик та коментарів до товару
+    ul.nav.nav-pills.pointer.detailsTabs
+        li(ng-class="{active:isSelected(1)}")
+            a(ng-click="selectTab(1)") Description
+        li(ng-class="{active:isSelected(2)}")
+            a(ng-click="selectTab(2)") Specifications
+        //в режимі редагування товару вкладка відгуку неактивна
+        li(ng-if="!editMode" ng-class="{active:isSelected(3)}")
+            a(ng-click="selectTab(3)") Reviews
+
+    //вкладка опису товару
+    .panel.textBlock(ng-show="isSelected(1)" ng-attr-contenteditable="{{editMode}}" ng-model="item.description")
+        //h5 {{item.description}}
+
+    //характеристик
+    .panel.textBlock(ng-show="isSelected(2)")
+        .row
+            .col-md-5
+                h4 Produced:
+            //для введення дат використовується не редаговане поле, а форма-календар
+            .col-md-7(ng-if="editMode")
+                input.form-control(type="date" ng-model="item.produced")
+            .col-md-7(ng-if="!editMode")
+                h5 {{item.produced | date:'yyyy-MM-dd'}}
+        .row(ng-if="editMode")
+            .col-md-5
+                h4 Received:
+            .col-md-7
+                input.form-control(type="date" ng-model="item.received")
+        .row(ng-if="editMode")
+            .col-md-5
+                h4 Category:
+            .col-md-7
+                select.form-control(ng-model="item.category" ng-options="category as category for category in categories")
+        //ітерується масив характеристик товару
+        .row(ng-repeat="spec in item.specifications")
+            .col-md-5.h4(ng-attr-contenteditable="{{editMode}}" ng-model="spec.specName")
+            //до полей значень характеристик додамо валідацію
+            .col-md-3.h5(ng-attr-contenteditable="{{editMode}}" ng-model="spec.specValue" validate="validateNumber(spec.specValue,spec.searchType)")
+            //вибір типу характеристики
+            .col-md-3(ng-if="editMode")
+                select.form-control(ng-model="spec.searchType" ng-options="searchType as searchType for searchType in searchTypes")
+            //видалення характеристики
+            .col-md-1(ng-if="editMode")
+                h5.glyphicon.glyphicon-trash.text-danger.removeSpecButton.pointer(ng-click="removeSpec(spec)")
+        //додавання харектеристики
+        .glyphicon.glyphicon-plus-sign.addSpecButton.pointer(ng-if="editMode" ng-click="addSpec()")
+    //вкладка з відгуками
+    .panel.textBlock(ng-show="isSelected(3)")
+        //якщо нема жодного
+        h4(ng-if="!item.replies.length") Your comment will be first!
+        //рекурсивне виведення дерева коментарів
+        recursive-output(data="item.replies")
+        //форма створення нового відгуку
+        //використовується директива ng-submit, що встановлює функцію, що викликається після підтвердження форми,
+        //з вірно введеними даними
+        form.reviewComposer(name="reviewForm" ng-submit="reviewForm.$valid && addComment()")
+            .form-group
+                h5 Rate Item:
+                //створення випадаючого списку з оцінками товару з масиву оцінок
+                //використовується директива ng-options яка автоматично створює елементи випадаючого списку за масивом marks
+                select.form-control(ng-model="review.rate" required ng-options="mark as mark for mark in marks")
+                h5 Your comment:
+                textarea.form-control(ng-model="review.comment" required)
+                //якщо користувач аутентифікований, автор відгука встановлюється автоматично
+                h5(ng-hide="identity.isAuthenticated()") Email:
+                    input.form-control(type="email" ng-model="review.author")
+                .text-right
+                    input.btn.btn-large.btn-success(type="submit" value="Send")
+
+

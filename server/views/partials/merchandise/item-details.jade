@@ -1,0 +1,70 @@
+//item-details.jade
+.container.contentHolder.itemDetails
+    //назва товару
+    h1.itemTitleText(ng-attr-contenteditable="{{editMode}}" ng-model="item.name")
+    //контрольні елементи доступні користувачу з роллю "торговець"
+    .itemEditControls(ng-if="!editMode && identity.isAuthorized('merchandiser')")
+        //перехід в режим редагування
+        a.btn.btn-xs.btn-primary.glyphicon.glyphicon-pencil(href="/edit/{{item._id}}")
+    .itemEditControls(ng-if="editMode")
+        //блокування/розблокування товару
+        .btn.btn-xs.btn-success.glyphicon.glyphicon-ok-circle(ng-if="item.available" ng-click="blockItem(true)")
+        .btn.btn-xs.btn-warning.glyphicon.glyphicon-ban-circle(ng-if="!item.available" ng-click="blockItem(false)")
+        //збереження товару
+        .btn.btn-xs.btn-primary.glyphicon.glyphicon-floppy-save(ng-click="askSaveConfirmation()")
+        //видалення товару
+        .btn.btn-xs.btn-danger.glyphicon.glyphicon-trash(ng-click="askRemoveConfirmation()")
+    .row
+        //стовпчик з фото, ціною, тегами, кнопкою купівлі
+        //класи bootstrap col-md-N/col-xs-N дозволяють визначити ширину стовпця для
+        //повноцінних/мобільних дисплеїв, з розрахунку до максимальної ширини - 12
+        .col-md-5.col-xs-6
+            //блок ілюстрації
+            .imageBlock(ng-if="!editMode && item.images")
+                //кнопка виклику перегляду всіх ілюстрації
+                //використовується glyphicon - клас іконок bootstrap
+                .expandButton.centerTextVertically.glyphicon.glyphicon-new-window(ng-click="openImageSlider()")
+                //зображення
+                img.img-responsive.centerImage(add-to-cart-animation width="320px", rnd-img-src="/res/img/{{item._id}}/0.jpg")
+            //блок форми завантаження файлів
+            file-uploader(ng-show="editMode")
+            //ціна, теги, та кнопка купівлі
+            .row
+                .col-md-9.col-xs-9
+                    h4.oneLine Price:
+                    h4.priceText.oneLine(ng-if="!editMode") {{item.price | currency}}
+                    input.form-control(ng-if="editMode" ng-model="item.price" type="number" min="1")
+                    div(ng-if="editMode")
+                        h4 Quantity:
+                        input.form-control(ng-model="item.quantity" type="number" min="0")
+                    h4 Tags:
+                        br
+                        //виведення масиву тегів
+                        .tagDiv.pointer(ng-repeat="tag in item.tags track by $index")
+                            a(ng-if="!editMode" href="/tag/{{tag}}") {{tag}}
+                            //редаговані блоки тегів, використовуємо forbidnewline для заборони багаторядкового вводу
+                            .oneLine.tagEdit(ng-if="editMode" ng-attr-contenteditable="{{editMode}}" ng-model="item.tags[$index]" forbidnewline="yep")
+                            //кнопка видалення тегу
+                            h5.oneLine.text-danger.glyphicon.glyphicon-remove-circle.removeTagButton(ng-if="editMode" ng-click="removeTag(tag)")
+                        //кнопка додавання нового тегу
+                        .oneLine.text-success.h5.addTagButton.pointer(ng-if="editMode" ng-click="addTag()") ✚
+                .col-md-3.col-xs-3(ng-if="!editMode")
+                    .pull-right
+                        //якщо нема товарів деактивуємо кнопку купівлі
+                        .btn.glyphicon.glyphicon-shopping-cart.buyButton(ng-click="addToCart()" ng-disabled="!item.quantity")
+                            h5.oneLine(ng-if="item.quantity") &nbspBuy
+                            h5.oneLine.glyphicon.glyphicon-ban-circle(ng-if="!item.quantity")
+
+        //стовпчик з детальною інформацією
+        .col-md-7.col-xs-6.descriptionBlock
+            //деталі товару
+            detailed-info
+//слайдер усіх ілюстрацій товару
+image-slider(ng-show="sliderActive" images="item.images" item="item._id")
+//анімація процесу створення нового товару
+.uploadingSplash(ng-show="uploading")
+    .glyphicon.glyphicon-cloud.cloudIcon0.uploadSplashIcon
+        .glyphicon.glyphicon-cloud.cloudIcon1.uploadSplashIcon
+        .glyphicon.glyphicon-cloud.cloudIcon2.uploadSplashIcon
+    .glyphicon.glyphicon-hdd.clientIcon.uploadSplashIcon
+    .glyphicon.glyphicon-arrow-up.uploadAnimationIcon.uploadSplashIcon

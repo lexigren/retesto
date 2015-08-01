@@ -1,0 +1,19 @@
+//signup-form.jade
+.jumbotron.SUForm.contentHolder.hidden#signUpForm(ng-controller="SignUpCtrl")
+    h2 Sign Up
+    form#SignUpForm(name="signUpForm", ng-model="signUpForm")
+        .form-group
+            input.form-control(name="email",type="email", placeholder="Email", ng-model="user.email",required)
+        .form-group
+            input.form-control(name="password", type="password", placeholder="Password", ng-model="user.password", required)
+        .form-group
+            input.form-control(name="password2", type="password", placeholder="Confirm password", ng-model="user.password2", required)
+        .form-group
+            input.form-control(name="fname", type="text", placeholder="First name", ng-model="user.fname", required)
+        .form-group
+            input.form-control(name="lname", type="text", placeholder="Last name", ng-model="user.lname", required)
+        .pull-right
+            //використаємо просту вбудовану валідацію
+            button.btn.btn-primary(ng-click="signup()", ng-disabled="signUpForm.$invalid") Sign Up
+            | &nbsp
+            a.btn.btn-default(ng-click="cancel()") Cancel

@@ -1,0 +1,30 @@
+//orders-filtration-form.jade
+.itemSearchHeader
+    h3 Search:
+    h6.clearCtrl.pointer(ng-click="clearSearch()") Clear all
+.itemSearch
+    form(ng-model="searchForm")
+        .form-group
+            label.h5.control-label In all fields:
+            input.form-control(size=17 ng-model="searchForm.searchText",placeholder="Filter")
+        .form-group
+            label.h5.control-label Customer:
+            input.form-control(size=17 ng-model="searchForm.customer",placeholder="Filter")
+        .form-group
+            label.h5.control-label Address:
+            input.form-control(size=17 ng-model="searchForm.address",placeholder="Filter")
+        .form-group
+            label.h5.control-label Date:
+            h6 from:
+            input.form-control(size=7, ng-model="searchForm.dateFrom", type="date")
+            h6 to:
+            input.form-control(size=7, ng-model="searchForm.dateTo", type="date")
+        .form-group
+            label.h5.control-label Price:
+            .row
+                .col-md-6
+                    h6 from:
+                    input.form-control(size=7,placeholder="Filter", ng-model="searchForm.priceFrom")
+                .col-md-6
+                    h6 to:
+                    input.form-control(size=7,placeholder="Filter", ng-model="searchForm.priceTo")

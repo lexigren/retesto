@@ -1,0 +1,56 @@
+//user-admin.jade
+.container.contentHolder
+    h3 User list:
+    //форма пошуку користувачів
+    form(ng-model="searchForm")
+        .form-group
+            label.h5.control-label Search users:
+            input.form-control(ng-model="searchForm.searchText",placeholder="Filter")
+    //таблиця користувачів
+    table.table.table-hover.table-striped.table-condensed
+        thead
+            //інтерактивні заголовки стовпців що викликають сортування за собою
+            tr.pointer
+                th(ng-click="sortReverse=!sortReverse; sortOrder='lastName'") name
+                th(ng-click="sortReverse=!sortReverse; sortOrder='roles[0]'") status
+                th(ng-click="sortReverse=!sortReverse; sortOrder='registered'") registered
+        tbody
+            //ітерація користувачів
+            tr(ng-repeat="user in (filteredItems=(users | filter:searchForm.searchText | orderBy:sortOrder:sortReverse)) | pagination: page.current | limitTo: page.size")
+                //ім’я користувача, яке дозволяє вибрати його для перегляду деталей
+                td.pointer(ng-click="setActiveUser(user)") {{user.lastName+" "+user.firstName}}
+                td(class="role-{{user.roles[0]}}") {{user.roles[0]}}
+                td {{user.registered | date:'yyyy/MMM/dd HH:mm:ss'}}
+            //навігаційний список сторінок
+            tr.noHover
+                td(colspan=3)
+                    pagination(ng-model="page" data="{{filteredItems.length}}" itemsPerPage="10")
+//"вікно" відображення вибраного користувача
+.contentHolder.user-details(ng-show="activeUser")
+    .panel.panel-info
+        .panel-heading
+            h2
+                | {{activeUser.firstName}} {{activeUser.lastName}}
+                //кнопка видалення користувача
+                .btn.btn-danger.glyphicon.glyphicon-trash.pull-left(ng-click="askDeleteConfirmation()")
+        .panel-body
+            //форма з деталями користувача
+            form.form-horizontal(ng-model="activeUser")
+                .userInfo
+                    //ітерація всіх полів об’єкту користувача з фільтрацією їх імен для виведення в читабельному вигляді
+                    .form-group(ng-repeat="(name,value) in activeUser | formatFields")
+                        label.control-label.col-xs-3 {{name}}:
+                        .col-xs-9
+                            p.form-control-static {{value}}
+                    //для редагування власником доступне лише поле ролі користувача
+                    .form-group
+                        label.control-label.col-xs-3 Set new main role:
+                        .col-xs-9
+                            select.form-control(ng-model="activeUser.newRole" ng-options="role as role for role in roles")
+                //кнопки виклику оновлення користувача, чи закриття вікна деталей
+                .panel-controls
+                    .form-group
+                        .col-xs-3
+                        .col-xs-9
+                            button.btn.btn-primary(ng-click="update()") Update user
+                            button.btn.btn-default(ng-click="cancel()") Close
